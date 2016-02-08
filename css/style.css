@@ -1,0 +1,803 @@
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+*, *:after, *:before {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 100%;
+  font-family: "Source Sans Pro", sans-serif;
+  color: rgba(2, 23, 37, 0.7);
+  background:#fff;
+}
+body.overflow-hidden {
+  /* when primary navigation is visible, the content in the background won't scroll */
+  overflow: hidden;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+/* -------------------------------- 
+
+Modules - reusable parts of our design
+
+-------------------------------- */
+.cd-container {
+  /* this class is used to give a max-width to the element it is applied to, and center it horizontally when it reaches that max-width */
+  width: 1000px;
+  margin: 0 auto;
+}
+
+.cd-container:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* -------------------------------- 
+
+Main components 
+
+-------------------------------- */
+html, body {
+  height: 100%;
+}
+
+.cd-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(2, 23, 37, 0.95);
+  height: 50px;
+  width: 100%;
+  z-index: 3;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media only screen and (min-width: 768px) {
+  .cd-header {
+    height: 80px;
+    background: transparent;
+    box-shadow: none;
+  }
+}
+
+@media only screen and (min-width: 1170px) {
+  .cd-header {
+    -webkit-transition: background-color 0.3s;
+    -moz-transition: background-color 0.3s;
+    transition: background-color 0.3s;
+    /* Force Hardware Acceleration in WebKit */
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform: translate3d(0, 0, 0);
+    -ms-transform: translate3d(0, 0, 0);
+    -o-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+  .cd-header.is-fixed {
+    /* when the user scrolls down, we hide the header right above the viewport */
+    position: fixed;
+    top: -80px;
+    background-color: #000;
+    -webkit-transition: -webkit-transform 0.3s;
+    -moz-transition: -moz-transform 0.3s;
+    transition: transform 0.3s;
+  }
+  .cd-header.is-visible {
+    /* if the user changes the scrolling direction, we show the header */
+    -webkit-transform: translate3d(0, 100%, 0);
+    -moz-transform: translate3d(0, 100%, 0);
+    -ms-transform: translate3d(0, 100%, 0);
+    -o-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+  }
+  .cd-header.menu-is-open {
+    /* add a background color to the header when the navigation is open */
+    background-color: rgba(2, 23, 37, 0.96);
+  }
+}
+
+.cd-logo {
+  display: block;
+  position: absolute;
+  top: 50%;
+  bottom: auto;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+  left: .875em;
+}
+.cd-logo img {
+  display: block;
+}
+@media only screen and (min-width: 768px) {
+  .cd-logo {
+    left: 2.6em;
+  }
+}
+
+.cd-secondary-nav {
+  position: absolute;
+  top: 50%;
+  bottom: auto;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+  right: 10em;
+  /* hidden on small devices */
+  display: none;
+}
+.cd-secondary-nav li {
+  display: inline-block;
+  margin-left: 2.2em;
+}
+.cd-secondary-nav a {
+  display: inline-block;
+  color: #666;
+  font-weight: 700;
+}
+@media only screen and (min-width: 768px) {
+  .cd-secondary-nav {
+    display: block;
+  }
+}
+
+.cd-primary-nav-trigger {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 50px;
+  background-color: #03263d;
+}
+.cd-primary-nav-trigger .cd-menu-text {
+  color: white;
+  text-transform: uppercase;
+  font-weight: 700;
+  /* hide the text on small devices */
+  display: none;
+}
+.cd-primary-nav-trigger .cd-menu-icon {
+  /* this span is the central line of the menu icon */
+  display: inline-block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  bottom: auto;
+  right: auto;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -o-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+  width: 18px;
+  height: 2px;
+  background-color: #666;
+  -webkit-transition: background-color 0.3s;
+  -moz-transition: background-color 0.3s;
+  transition: background-color 0.3s;
+  /* these are the upper and lower lines in the menu icon */
+}
+.cd-primary-nav-trigger .cd-menu-icon::before, .cd-primary-nav-trigger .cd-menu-icon:after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: #666;
+  right: 0;
+  -webkit-transition: -webkit-transform .3s, top .3s, background-color 0s;
+  -moz-transition: -moz-transform .3s, top .3s, background-color 0s;
+  transition: transform .3s, top .3s, background-color 0s;
+}
+.cd-primary-nav-trigger .cd-menu-icon::before {
+  top: -5px;
+}
+.cd-primary-nav-trigger .cd-menu-icon::after {
+  top: 5px;
+}
+.cd-primary-nav-trigger .cd-menu-icon.is-clicked {
+  background-color: rgba(255, 255, 255, 0);
+}
+.cd-primary-nav-trigger .cd-menu-icon.is-clicked::before, .cd-primary-nav-trigger .cd-menu-icon.is-clicked::after {
+  background-color: white;
+}
+.cd-primary-nav-trigger .cd-menu-icon.is-clicked::before {
+  top: 0;
+  -webkit-transform: rotate(135deg);
+  -moz-transform: rotate(135deg);
+  -ms-transform: rotate(135deg);
+  -o-transform: rotate(135deg);
+  transform: rotate(135deg);
+}
+.cd-primary-nav-trigger .cd-menu-icon.is-clicked::after {
+  top: 0;
+  -webkit-transform: rotate(225deg);
+  -moz-transform: rotate(225deg);
+  -ms-transform: rotate(225deg);
+  -o-transform: rotate(225deg);
+  transform: rotate(225deg);
+}
+@media only screen and (min-width: 768px) {
+  .cd-primary-nav-trigger {
+    width: 100px;
+    padding-left: 1em;
+    background-color: transparent;
+    height: 30px;
+    line-height: 30px;
+    right: 2.2em;
+    top: 50%;
+    bottom: auto;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+  }
+  .cd-primary-nav-trigger .cd-menu-text {
+    display: inline-block;
+  }
+  .cd-primary-nav-trigger .cd-menu-icon {
+    left: auto;
+    right: 1em;
+    -webkit-transform: translateX(0) translateY(-50%);
+    -moz-transform: translateX(0) translateY(-50%);
+    -ms-transform: translateX(0) translateY(-50%);
+    -o-transform: translateX(0) translateY(-50%);
+    transform: translateX(0) translateY(-50%);
+  }
+}
+
+.cd-primary-nav {
+  /* by default it's hidden - on top of the viewport */
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(2, 23, 37, 0.96);
+  z-index: 2;
+  text-align: center;
+  padding: 50px 0;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  overflow: auto;
+  /* this fixes the buggy scrolling on webkit browsers - mobile devices only - when overflow property is applied */
+  -webkit-overflow-scrolling: touch;
+  -webkit-transform: translateY(-100%);
+  -moz-transform: translateY(-100%);
+  -ms-transform: translateY(-100%);
+  -o-transform: translateY(-100%);
+  transform: translateY(-100%);
+  -webkit-transition-property: -webkit-transform;
+  -moz-transition-property: -moz-transform;
+  transition-property: transform;
+  -webkit-transition-duration: 0.4s;
+  -moz-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+}
+.cd-primary-nav li {
+  font-size: 22px;
+  font-size: 1.375rem;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: .2em 0;
+  text-transform: capitalize;
+}
+.cd-primary-nav a {
+  display: inline-block;
+  padding: .4em 1em;
+  border-radius: 0.25em;
+  -webkit-transition: background 0.2s;
+  -moz-transition: background 0.2s;
+  transition: background 0.2s;
+}
+.no-touch .cd-primary-nav a:hover {
+  color:#6ed3cf;
+}
+
+.cd-primary-nav.is-visible {
+  -webkit-transform: translateY(0);
+  -moz-transform: translateY(0);
+  -ms-transform: translateY(0);
+  -o-transform: translateY(0);
+  transform: translateY(0);
+}
+@media only screen and (min-width: 768px) {
+  .cd-primary-nav {
+    padding: 80px 0;
+  }
+}
+@media only screen and (min-width: 1170px) {
+  .cd-primary-nav li {
+    font-size: 30px;
+    font-size: 1.875rem;
+  }
+  .cd-primary-nav .cd-label {
+    font-size: 16px;
+    font-size: 1rem;
+  }
+}
+
+.cd-intro {
+  position: relative;
+  height: 100%;
+  background: url("../img/bg1.png") no-repeat center center;
+  background-size: cover;
+  z-index: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.cd-intro .b1 {
+  position: absolute;
+  width: 90%;
+  max-width: 1170px;
+  left: 30%;
+  top: 40%;
+  bottom: auto;
+  right: auto;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -o-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+  color: white;
+  font-size: 20px;
+  font-size: 1.25rem;
+  font-weight: 300;
+  text-align: center;
+}
+
+.cd-intro .b1 p {
+  position: absolute;
+  width: 90%;
+  max-width: 1170px;
+  left: 50%;
+  top: 150%;
+  bottom: auto;
+  right: auto;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -o-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+  color: white;
+  font-size: 20px;
+  font-size: 1.25rem;
+  font-weight: 300;
+  text-align: center;
+}
+
+.cd-intro .b1 p img {
+  background:black;
+  opacity: 0.6;
+  padding: 0;
+  width: 180px;
+  height: auto;
+  border-radius: 5px;
+}
+
+.cd-intro .b1 p img:hover {
+  
+  opacity: 1;
+}
+
+
+.cd-intro .b2 {
+  position: absolute;
+  width: 50%;
+  max-width: 1000px;
+  left: 65%;
+  top: 50%;
+  bottom: auto;
+  right: auto;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -o-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+  color: white;
+  font-size: 20px;
+  font-size: 1.25rem;
+  font-weight: 300;
+  text-align: center;
+}
+
+.cd-intro form {
+  position: absolute;
+  width: 90%;
+  max-width: 1170px;
+  left: 50%;
+  top: 60%;
+  bottom: auto;
+  right: auto;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -o-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+  text-align: center;
+}
+
+.btn
+{
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: 260%;
+  bottom: auto;
+  right: auto;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -o-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+  text-align: center;
+  padding:20px 100px 20px 100px;
+  border:3px solid white;
+  font-size: 19px;
+  border-radius: 3px;
+}
+
+.btn:hover
+{
+  background:white;
+  color:#666;
+}
+
+.cd-intro form p
+{
+  font-size: 28px;
+  font-weight: bold;
+  color:white;
+  vertical-align: baseline;
+}
+
+.cd-intro form input{
+ padding-bottom: 10px;
+  border-radius: 3px;
+  border:0px;
+  background:none;
+  border-bottom:4px dashed #fff;
+}
+
+.cd-intro input:-moz-placeholder {
+    color: #6ed3cf;
+    text-align: center;
+    font-weight: bold;
+    font-size: 17px;
+    text-transform: uppercase;
+}
+ 
+.cd-intro input::-webkit-input-placeholder {
+    color: #6ed3cf;
+    text-align: center;
+    font-weight: bold;
+    font-size: 17px;
+    text-transform: uppercase;
+    
+}
+ 
+.cd-intro input.placeholder {
+    color: #6ed3cf;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    
+}
+
+@media only screen and (min-width: 768px) {
+  .cd-intro h1 {
+    font-size: 70px;
+    font-weight: bold;
+  }
+  .cd-intro h2
+  {
+    font-size: 30px;
+    font-weight: 500;
+  }
+}
+@media only screen and (min-width: 1170px) {
+  .cd-intro {
+    height: 700px;
+  }
+}
+
+.cd-main-content {
+  position: relative;
+  z-index: 1;
+}
+.cd-main-content p {
+  line-height: 1.6;
+  margin: 2em 0;
+}
+@media only screen and (min-width: 1170px) {
+  .cd-main-content p {
+    font-size: 20px;
+    font-size: 1.25rem;
+  }
+}
+
+
+.cd-main-content .sec1 
+{
+  text-align: center;
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+.cd-main-content .sec1  h1
+{
+  font-size: 30px;
+  margin-bottom: 60px;
+}
+
+
+.cd-main-content .sec1 .bloc3, .bloc4
+{
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.cd-main-content .sec1 .bloc3
+{
+  width:300px;
+}
+
+.cd-main-content .sec1 .bloc4
+{
+  width:690px;
+}
+
+.cd-main-content .sec1 .bloc4 table
+{
+  text-align: justify;
+}
+
+.cd-main-content .sec1 .bloc4 table h3
+{
+  font-size: 18px;
+  font-weight: bold;
+  color:#2ecc71;
+  margin-bottom: 10px;
+}
+
+.cd-main-content .sec1 .bloc4 table td
+{
+  vertical-align: middle;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 45px;
+}
+
+
+.cd-main-content .sec2
+{
+  padding-top: 60px;
+  padding-bottom: 60px;
+  text-align: center;
+  background:url('../img/bg2.png') no-repeat center;
+  background-size:cover;  
+  color:white;
+}
+
+.cd-main-content .sec2 p
+{
+  font-size: 17px;
+}
+
+.cd-main-content .sec2 h1
+{
+  font-size: 30px;
+  padding-bottom: 30px;
+}
+
+
+.cd-main-content .sec2 p 
+{
+  font-size: 23px;
+}
+
+.cd-main-content .sec2 p span
+{
+  font-weight: bold;
+}
+
+
+.cd-main-content .sec3
+{
+   padding-top:60px;
+   padding-bottom: 60px;
+   text-align: center;
+}
+
+.cd-main-content .sec3 h1
+{
+   font-size: 30px;
+   margin-bottom: 60px;
+}
+
+.cd-main-content .sec3 p img
+{
+   margin:10px;
+}
+
+
+
+.cd-main-content .sec4
+{
+  padding-top: 60px;
+  padding-bottom: 60px;
+  background:#27ae60;
+  color:white;
+}
+
+.cd-main-content .sec4 h1
+{
+  font-size:30px;
+  margin-bottom: 30px;
+}
+
+
+.cd-main-content .sec4 #c1, #c2
+{
+  display: inline-block;
+  vertical-align: middle;
+  width: 400px;
+}
+
+
+.cd-main-content .sec4 p
+{
+  font-size:25px;
+  font-weight: bold;
+  margin-bottom: 60px;
+}
+
+.cd-main-content .sec4 span
+{
+  display: block;
+	color:#f1c40f;
+	font-weight: bold;
+}
+
+.cd-main-content .sec4 .btn2
+{
+  text-align: left;
+  font-size: 17px;
+}
+
+
+.cd-main-content .sec4 a
+{
+  padding: 15px 40px 15px 40px;
+  border:2px solid #6ed3cf;
+  border-radius: 3px;
+  color:#6ed3cf;
+}
+
+
+.cd-main-content .sec5
+{
+  text-align: center;
+  padding-top: 60px;
+  padding-bottom: 0px;
+}
+
+.cd-main-content .sec5 .bloc5, .bloc6
+{
+  display: inline-block;
+  vertical-align: top;
+  
+}
+
+.cd-main-content .sec5 .bloc5
+{
+  width:400px;
+  text-align: justify;
+  margin-right: 60px;
+}
+
+.cd-main-content .sec5 .bloc6
+{
+  width:500px;
+  margin-left: 20px;
+}
+
+.cd-main-content .sec5 form input, textarea
+{
+  padding:15px;
+  border:0;
+  border-bottom:2px solid #ccc;
+  margin-bottom: 20px;
+}
+
+
+.cd-main-content .sec5 h1
+{
+  font-size: 30px;
+  margin-bottom: 60px;
+}
+
+.cd-main-content .sec5 p 
+{
+  font-size: 17px;
+  margin:0px;
+  padding:10px;
+  line-height: 40px;
+}
+
+.cd-main-content .sec5 p span
+{
+  font-weight: bold;
+}
+
+.cd-main-content .sec5 a 
+{
+  border:2px solid #2ecc71;
+  color:#2ecc71;
+  padding:15px 100px 15px 100px;
+  font-weight: bold;
+  border-radius: 3px;
+}
+
+.cd-main-content .sec5 a:hover
+{
+  background:#2ecc71;
+  color:white;
+}
+
+.cd-main-content .sec5 form 
+{
+  margin-bottom: 50px;
+}
+
+.cd-main-content .sec5 form  textarea
+{
+  margin-bottom: 70px;
+}
+
+
+
+
+input, textarea {
+    color: #ccc;
+}
+ 
+input:-moz-placeholder, textarea:-moz-placeholder {
+    color: #ccc;
+}
+ 
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+    color: #ccc;
+}
+ 
+input.placeholder, textarea.placeholder {
+    color: #ccc;
+}
+
+
+.footer 
+{
+  background:#212121;
+  color:white;
+  padding:40px 0px 30px 0px;
+  text-align: center;
+}
+
